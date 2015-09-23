@@ -12,29 +12,16 @@ $ npm i emitter-only --save
 
 ```js
 var only = require('emitter-only');
-```
-
-## API
-
-### [only](index.js#L39)
-
-Only register an event listener one time for the given `name/event` combo.
-
-**Params**
-
-* `name` **{String}**: Name to specify this is a unique listener.
-* `event` **{String}**: Event name to pass to the emitter `on` method.
-* `fn` **{Function}**: Event listener function to pass to the emitter `on` method.
-* `returns` **{Object}**: Return `this` for chaining.
-
-**Example**
-
-```js
 Emitter.prototype.only = function () {
   return only.apply(this, arguments);
 };
 
 var emitter = new Emitter();
+
+emitter.on('foo', function (msg) {
+  console.log('foo', msg);
+});
+
 emitter.only('one-time', 'foo', function (msg) {
   console.log('foo 1', msg);
 });
@@ -45,7 +32,21 @@ emitter.only('one-time', 'foo', function (msg) {
 
 emitter.emit('foo', 'bar');
 //=> 'foo bar'
+//=> 'foo 1 bar'
 ```
+
+## API
+
+### [only](index.js#L22)
+
+Only register an event listener one time for the given `name/event` combo.
+
+**Params**
+
+* `name` **{String}**: Name to specify this is a unique listener.
+* `event` **{String}**: Event name to pass to the emitter `on` method.
+* `fn` **{Function}**: Event listener function to pass to the emitter `on` method.
+* `returns` **{Object}**: Return `this` for chaining.
 
 ## Related projects
 

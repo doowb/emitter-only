@@ -25,6 +25,12 @@ describe('emitter-only', function () {
     var count = 0;
     var output = [];
     var emitter = Emitter(new MyEmitter());
+
+    emitter.on('foo', function (msg) {
+      count++;
+      output.push('foo-' + msg);
+    });
+
     emitter.only('one-time', 'foo', function (msg) {
       count++;
       output.push('foo-1-' + msg);
@@ -41,8 +47,8 @@ describe('emitter-only', function () {
     });
 
     emitter.emit('foo', 'bar');
-    assert.equal(count, 2);
-    assert.deepEqual(output, ['foo-1-bar', 'foo-3-bar']);
+    assert.equal(count, 3);
+    assert.deepEqual(output, ['foo-bar', 'foo-1-bar', 'foo-3-bar']);
   });
 
   it('should add an event listener one time on inherited constructor', function () {
@@ -58,6 +64,12 @@ describe('emitter-only', function () {
     var count = 0;
     var output = [];
     var emitter = new MyEmitter();
+
+    emitter.on('foo', function (msg) {
+      count++;
+      output.push('foo-' + msg);
+    });
+
     emitter.only('one-time', 'foo', function (msg) {
       count++;
       output.push('foo-1-' + msg);
@@ -74,7 +86,7 @@ describe('emitter-only', function () {
     });
 
     emitter.emit('foo', 'bar');
-    assert.equal(count, 2);
-    assert.deepEqual(output, ['foo-1-bar', 'foo-3-bar']);
+    assert.equal(count, 3);
+    assert.deepEqual(output, ['foo-bar', 'foo-1-bar', 'foo-3-bar']);
   });
 });

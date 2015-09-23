@@ -20,6 +20,18 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "mocha": "*"
+    "component-emitter": "^1.2.0",
+    "mocha": "*",
+    "should": "^7.1.0"
+  },
+  "dependencies": {
+    "define-property": "^0.2.5"
+  },
+  "verb": {
+    "related": {
+      "list": [
+        "component-emitter"
+      ]
+    }
   }
 }

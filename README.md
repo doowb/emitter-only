@@ -1,49 +1,79 @@
-# emitter-only [![NPM version](https://badge.fury.io/js/emitter-only.svg)](http://badge.fury.io/js/emitter-only)  [![Build Status](https://travis-ci.org/doowb/emitter-only.svg)](https://travis-ci.org/doowb/emitter-only) 
+# emitter-only [![NPM version](https://badge.fury.io/js/emitter-only.svg)](http://badge.fury.io/js/emitter-only)  [![Build Status](https://travis-ci.org/doowb/emitter-only.svg)](https://travis-ci.org/doowb/emitter-only)
 
 > Extend event emitters to allow registering listeners only once.
 
-## Install with [npm](npmjs.org)
+Install with [npm](https://www.npmjs.com/)
 
-```bash
-npm i emitter-only --save
+```sh
+$ npm i emitter-only --save
 ```
 
 ## Usage
 
 ```js
-var emitterOnly = require('emitter-only');
+var only = require('emitter-only');
 ```
 
 ## API
-<!-- add a path or glob pattern for files with code comments to use for docs  -->
-{%= apidocs("index.js") %}
 
-## Related projects
-<!-- add an array of related projects, then un-escape the helper -->
-{%= related([]) %}  
+### [only](index.js#L39)
 
-## Running tests
-Install dev dependencies.
+Only register an event listener one time for the given `name/event` combo.
 
-```bash
-npm i -d && npm test
+**Params**
+
+* `name` **{String}**: Name to specify this is a unique listener.
+* `event` **{String}**: Event name to pass to the emitter `on` method.
+* `fn` **{Function}**: Event listener function to pass to the emitter `on` method.
+* `returns` **{Object}**: Return `this` for chaining.
+
+**Example**
+
+```js
+Emitter.prototype.only = function () {
+  return only.apply(this, arguments);
+};
+
+var emitter = new Emitter();
+emitter.only('one-time', 'foo', function (msg) {
+  console.log('foo 1', msg);
+});
+
+emitter.only('one-time', 'foo', function (msg) {
+  console.log('foo 2', msg);
+});
+
+emitter.emit('foo', 'bar');
+//=> 'foo bar'
 ```
 
+## Related projects
+
+[component-emitter](https://www.npmjs.com/package/component-emitter): Event emitter | [homepage](https://github.com/component/emitter)
+
+## Running tests
+
+Install dev dependencies:
+
+```sh
+$ npm i -d && npm test
+```
 
 ## Contributing
-Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/doowb/emitter-only/issues)
 
+Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](https://github.com/doowb/emitter-only/issues/new).
 
 ## Author
 
 **Brian Woodward**
- 
+
 + [github/doowb](https://github.com/doowb)
-+ [twitter/doowb](http://twitter.com/doowb) 
++ [twitter/doowb](http://twitter.com/doowb)
 
 ## License
+
 Copyright © 2015 Brian Woodward
-Released under the MIT license
+Released under the MIT license.
 
 ***
 
